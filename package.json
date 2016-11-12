@@ -1,0 +1,23 @@
+{
+  "name": "cube-website",
+  "version": "1.0.0",
+  "description": "Cube website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JustinDao/cube-website.git"
+  },
+  "author": "Justin Dao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JustinDao/cube-website/issues"
+  },
+  "homepage": "https://github.com/JustinDao/cube-website#readme",
+  "engines" : { "node" : ">=7.1.0" },
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
