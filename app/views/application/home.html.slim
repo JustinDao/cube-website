@@ -1,0 +1,40 @@
+-# Uses a transparent header that draws on top of the layout's background
+.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+  header.mdl-layout__header.is-casting-shadow.mdl-color--grey-800
+    .mdl-layout__header-row
+      span.mdl-layout-title CubeWebsite
+      .mdl-layout-spacer
+      nav.mdl-navigation
+        a.mdl-navigation__link[href=""] Link
+        a.mdl-navigation__link[href=""] Link
+        a.mdl-navigation__link[href=""] Link
+        a.mdl-navigation__link[href=""] Link
+  .mdl-layout__drawer
+    span.mdl-layout-title Menu
+    nav.mdl-navigation
+      a.mdl-navigation__link[href=""] Link
+      a.mdl-navigation__link[href=""] Link
+      a.mdl-navigation__link[href=""] Link
+      a.mdl-navigation__link[href=""] Link
+  main.mdl-layout__content
+    .mdl-grid
+      #cube-time-row.mdl-cell.mdl-cell--12-col[style="text-align:center;"]
+        span#cube-time 0.000
+    .mdl-grid
+      .mdl-layout-spacer
+      .mdl-cell.mdl-cell--1-col
+        label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect[for="inspection-switch"]
+          input#inspection-switch.mdl-switch__input[type="checkbox"]
+          span.mdl-switch__label Inspection
+      .mdl-layout-spacer
+    .mdl-grid
+      .mdl-layout-spacer
+      .mdl-cell.mdl-cell--1-col
+        label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect[for="option-1"]
+          input#option-1.mdl-radio__button[type="radio" name="cube-input" value="1" checked]
+          span.mdl-radio__label Spacebar
+      .mdl-cell.mdl-cell--2-col
+        label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect[for="option-2"]
+          input#option-2.mdl-radio__button[type="radio" name="cube-input" value="2"]
+          span.mdl-radio__label CTRL keys (beta)
+      .mdl-layout-spacer
