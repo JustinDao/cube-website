@@ -48,6 +48,7 @@ $(document).ready( function()
         console.log("start inspection");
         startInspection();
         inspectionRunning = true;
+        ctrlReady = false;
       }
       else
       {
@@ -57,6 +58,7 @@ $(document).ready( function()
         start();
         inspectionRunning = false;
         running = true;
+        ctrlReady = false;
       }      
     }
   });
@@ -65,8 +67,12 @@ $(document).ready( function()
   {
     if (!finished && e.keyCode == 17)
     {
-      ctrlDownCount += 1;
-      if (ctrlDownCount >= 2)
+      if (ctrlDownCount < 2)
+      {
+        ctrlDownCount += 1;
+      }
+
+      if (ctrlDownCount >= 2 && !running)
       {
         ctrlReady = true;
       }
@@ -91,7 +97,6 @@ $(document).ready( function()
       running = false;
       inspectionRunning = false;
       finished = true;
-      ctrlReady = false;   
     }
   });
 
