@@ -1,3 +1,5 @@
+// console.log = function() {}
+
 $(document).ready( function()
 {
   var offset, clock, interval, inspectionTime;
@@ -9,38 +11,42 @@ $(document).ready( function()
   var defaultInspectionTime = 15;
   var useCtrl = false;
 
-  var ctrlDownCount = 0;
+  var ctrlLeftDown = false, ctrlRightDown = false;
   var ctrlReady = false;
 
   // Start is on key up
   // Stop is on key down
   $(document).keyup(function(e) 
   {
-    if (e.keyCode == 17 && ctrlDownCount != 0)
+    var ctrlWasDown = BothCtrlDown();
+
+    // Get Key Events
+    var isSpaceUp = e.keyCode == 32;
+    if (e.keyCode == 17)
     {
-      ctrlDownCount -= 1;
-      console.log(ctrlDownCount);
+      HandleCtrl(e, false);
     }
 
     if (finished)
     {
+      console.log("finished");
       finished = false;
       return;
     }
 
-    var valid = false; 
-
-    if (!useCtrl)
+    var readyToBegin = false;
+    if (useCtrl)
     {
-      valid = e.keyCode == 32 && !running;  
+      readyToBegin = !running && ctrlWasDown;
     }
     else
     {
-      valid = ctrlReady && !running;
+      readyToBegin = !running && isSpaceUp;
     }
 
-    if (valid) 
+    if (readyToBegin) 
     {
+      console.log("valid keyup");
       reset();
 
       if (inspection && !inspectionRunning)
@@ -48,52 +54,44 @@ $(document).ready( function()
         console.log("start inspection");
         startInspection();
         inspectionRunning = true;
-        ctrlReady = false;
       }
       else
       {
         console.log("start time");
         clearInterval(interval);
         interval = null;
-        start();
+        startTimer();
         inspectionRunning = false;
         running = true;
-        ctrlReady = false;
       }      
     }
   });
 
   $(document).keydown(function(e)
   {
-    if (!finished && e.keyCode == 17)
+    // Get Key Events
+    var isSpaceDown = e.keyCode == 32;
+    if (e.keyCode == 17)
     {
-      if (ctrlDownCount < 2)
-      {
-        ctrlDownCount += 1;
-      }
+      HandleCtrl(e, true);
+    }    
 
-      if (ctrlDownCount >= 2 && !running)
-      {
-        ctrlReady = true;
-      }
-      console.log(ctrlDownCount);
-    }
+    // Check if stop should occur
+    var stopReady = false;
 
-    var valid = false;
-
-    if (!useCtrl)
+    if (useCtrl)
     {
-      valid = e.keyCode == 32 && running;  
+      stopReady = running && BothCtrlDown();
     }
     else
     {
-      valid = ctrlDownCount >= 2 && running;
+      stopReady = running && isSpaceDown;
     }
 
-    if (valid)
+    if (stopReady)
     {
       console.log("stopping");
-      stop();
+      stopTimer();
       running = false;
       inspectionRunning = false;
       finished = true;
@@ -121,72 +119,36 @@ $(document).ready( function()
     }
     else if (this.value == '2') {
       useCtrl = true;
-      ctrlDownCount = 0;
       console.log("CTRL");
     }
   });
 
-  function start() {
-    ctrlDownCount = 0;
-    if (!interval) {
-      offset   = Date.now();
-      interval = setInterval(update);
-      render();
-    }
+  // Main Timer functions
+
+  function startTimer() {
+    if (!running)
+    {
+      offset = Date.now();
+      interval = setInterval(updateTimer);
+      updateTimer();
+    }   
   }
 
-  function stop() {
-    if (interval) {
+  function stopTimer() {
+    if (running) {
       clearInterval(interval);
-      interval = null;
     }
   }
 
   function reset() {
     clock = 0;
-    ctrlDownCount = 0;
-    render();
+    $("#cube-time").text(clock.toFixed(3));
   }
 
-  function update() {
+  function updateTimer() {
     clock += delta();
-    render();
-  }
-
-  function render() {
     var time = clock / 1000;
     $("#cube-time").text(time.toFixed(3));
-  }
-
-  function startInspection() {
-    if (!interval) {
-      offset   = Date.now();
-      interval = setInterval(updateInspection, 1000);
-      inspectionTime = defaultInspectionTime;
-      renderInspection();
-    }
-  }
-
-  function updateInspection() {
-    inspectionTime -= delta() / 1000;
-
-    if (inspectionTime > 0)
-    {
-      renderInspection();
-    }
-    else
-    {
-      console.log("inspection ran out");
-      clearInterval(interval);
-      interval = null;
-      start();
-      inspectionRunning = false;
-      running = true;
-    }
-  }  
-
-  function renderInspection() {
-    $("#cube-time").text(Math.round(inspectionTime));
   }
 
   function delta() {
@@ -195,5 +157,54 @@ $(document).ready( function()
 
     offset = now;
     return d;
+  }
+
+  // Inspection functions
+
+  function startInspection() {
+    if (!running && !inspectionRunning) {
+      offset   = Date.now();
+      interval = setInterval(updateInspection, 1000);
+      inspectionTime = defaultInspectionTime;
+      updateInspection();
+    }
+  }
+
+  function updateInspection() {
+    inspectionTime -= delta() / 1000;
+
+    if (inspectionTime > 0)
+    {
+      $("#cube-time").text(Math.round(inspectionTime));
+    }
+    else
+    {
+      console.log("inspection ran out");
+      clearInterval(interval);
+      interval = null;
+      startTimer();
+      inspectionRunning = false;
+      running = true;
+    }
+  }  
+
+  // CTRL Functions
+
+  function HandleCtrl(e, isKeyDown)
+  {
+    if (event.location === KeyboardEvent.DOM_KEY_LOCATION_LEFT)
+    {
+      console.log("left ctrl is " + isKeyDown);
+      ctrlLeftDown = isKeyDown;
+    } else if (event.location === KeyboardEvent.DOM_KEY_LOCATION_RIGHT)
+    {
+      console.log("right ctrl is " + isKeyDown);
+      ctrlRightDown = isKeyDown;
+    }
+  }
+
+  function BothCtrlDown()
+  {
+    return ctrlLeftDown && ctrlRightDown;
   }
 });
