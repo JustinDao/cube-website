@@ -1,28 +1,31 @@
--# Uses a transparent header that draws on top of the layout's background
 .mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-tabs.mdl-color--grey-800
   header.mdl-layout__header.is-casting-shadow.mdl-color--grey-800
     .mdl-layout__header-row
       span.mdl-layout-title MaterialTimer
       .mdl-layout-spacer
+      .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.getmdl-select.getmdl-select__fullwidth
+        input#cube-type.mdl-textfield__input[type="text" value="3x3" readonly tabindex="-1"]
+        label.mdl-textfield__label[for="cube-type"] Cube Type
+        ul.mdl-menu.mdl-menu--bottom-left.mdl-js-menu[for="cube-type"]
+          li.mdl-menu__item 3x3
+          li.mdl-menu__item 3x3 one-hand
+          li.mdl-menu__item 3x3 blindfold
+      .mdl-layout-spacer
       nav.mdl-navigation
-        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.getmdl-select.getmdl-select__fullwidth
-          input#cube-type.mdl-textfield__input[type="text" value="3x3" readonly tabindex="-1"]
-          label.mdl-textfield__label[for="cube-type"] Cube Type
-          ul.mdl-menu.mdl-menu--bottom-left.mdl-js-menu[for="cube-type"]
-            li.mdl-menu__item 3x3
-            li.mdl-menu__item 3x3 one-hand
-            li.mdl-menu__item 3x3 blindfold
+        a.mdl-navigation__link[href="sign_up"] Sign Up
+        a.mdl-navigation__link[href="login"] Login
     .mdl-layout__tab-bar.mdl-js-ripple-effect
       a.mdl-layout__tab[href="#fixed-tab-1"] History
       a.mdl-layout__tab.is-active[href="#timer-tab"] Timer
       a.mdl-layout__tab[href="#fixed-tab-3"] Trends
   .mdl-layout__drawer
     span.mdl-layout-title Menu
+    nav.mdl-navigation
+      a.mdl-navigation__link[href="about"] About
   main.mdl-layout__content
     section#fixed-tab-1.mdl-layout__tab-panel
       .page-content
     section#timer-tab.mdl-layout__tab-panel.is-active
-      = render 'timer'
-    
+      = render 'timer'    
     section#fixed-tab-3.mdl-layout__tab-panel
       .page-content
