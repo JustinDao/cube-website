@@ -13,7 +13,16 @@
  *
 */
 
+$layout-header-bg-color: rgb(66,66,66) !default;
+
+@import "material/color-definitions";
+
+$color-primary: $palette-amber-500;
+$color-primary-dark: $palette-amber-500;
+$color-accent: $palette-amber-500;
+
 @import 'material';
+
 
 body 
 {
@@ -23,8 +32,12 @@ body
 
 #cube-time 
 {
-  font-size: 100px;
+  font-size: 400px;
   line-height: 100%;
 }
 
-
+#scramble
+{
+  font-size: 20px;
+  line-height: 100%;
+}

@@ -1,40 +1,28 @@
 -# Uses a transparent header that draws on top of the layout's background
-.mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+.mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-tabs.mdl-color--grey-800
   header.mdl-layout__header.is-casting-shadow.mdl-color--grey-800
     .mdl-layout__header-row
-      span.mdl-layout-title CubeWebsite
+      span.mdl-layout-title MaterialTimer
       .mdl-layout-spacer
       nav.mdl-navigation
-        a.mdl-navigation__link[href=""] Link
-        a.mdl-navigation__link[href=""] Link
-        a.mdl-navigation__link[href=""] Link
-        a.mdl-navigation__link[href=""] Link
+        .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.getmdl-select.getmdl-select__fullwidth
+          input#cube-type.mdl-textfield__input[type="text" value="3x3" readonly tabindex="-1"]
+          label.mdl-textfield__label[for="cube-type"] Cube Type
+          ul.mdl-menu.mdl-menu--bottom-left.mdl-js-menu[for="cube-type"]
+            li.mdl-menu__item 3x3
+            li.mdl-menu__item 3x3 one-hand
+            li.mdl-menu__item 3x3 blindfold
+    .mdl-layout__tab-bar.mdl-js-ripple-effect
+      a.mdl-layout__tab[href="#fixed-tab-1"] History
+      a.mdl-layout__tab.is-active[href="#timer-tab"] Timer
+      a.mdl-layout__tab[href="#fixed-tab-3"] Trends
   .mdl-layout__drawer
     span.mdl-layout-title Menu
-    nav.mdl-navigation
-      a.mdl-navigation__link[href=""] Link
-      a.mdl-navigation__link[href=""] Link
-      a.mdl-navigation__link[href=""] Link
-      a.mdl-navigation__link[href=""] Link
   main.mdl-layout__content
-    .mdl-grid
-      #cube-time-row.mdl-cell.mdl-cell--12-col[style="text-align:center;"]
-        span#cube-time 0.000
-    .mdl-grid
-      .mdl-layout-spacer
-      .mdl-cell.mdl-cell--1-col
-        label.mdl-switch.mdl-js-switch.mdl-js-ripple-effect[for="inspection-switch"]
-          input#inspection-switch.mdl-switch__input[type="checkbox"]
-          span.mdl-switch__label Inspection
-      .mdl-layout-spacer
-    .mdl-grid
-      .mdl-layout-spacer
-      .mdl-cell.mdl-cell--1-col
-        label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect[for="option-1"]
-          input#option-1.mdl-radio__button[type="radio" name="cube-input" value="1" checked]
-          span.mdl-radio__label Spacebar
-      .mdl-cell.mdl-cell--1-col
-        label.mdl-radio.mdl-js-radio.mdl-js-ripple-effect[for="option-2"]
-          input#option-2.mdl-radio__button[type="radio" name="cube-input" value="2"]
-          span.mdl-radio__label CTRL keys
-      .mdl-layout-spacer
+    section#fixed-tab-1.mdl-layout__tab-panel
+      .page-content
+    section#timer-tab.mdl-layout__tab-panel.is-active
+      = render 'timer'
+    
+    section#fixed-tab-3.mdl-layout__tab-panel
+      .page-content

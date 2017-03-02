@@ -95,6 +95,7 @@ $(document).ready( function()
       running = false;
       inspectionRunning = false;
       finished = true;
+      $("#scramble").text(GetScramble());
     }
   });
 
