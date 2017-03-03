@@ -19,3 +19,7 @@
 document.addEventListener('turbolinks:load', function() {
   componentHandler.upgradeDom();
 });
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

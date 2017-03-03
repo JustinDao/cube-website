@@ -21,13 +21,19 @@ function GetScramble()
   for (var i = 0; i < 25; i ++)
   {
     var nextTurn = availableMoves[Math.floor(Math.random() * availableMoves.length)];    
-    var shouldAddDoubleTurn = Math.random() >= 0.5;
+    
+    var modifier = getRandomInt(0,2);
 
     scramble += nextTurn;
 
-    if (shouldAddDoubleTurn)
+    switch (modifier)
     {
-      scramble += "2";
+      case 1:
+        scramble += "'";
+        break;
+      case 2:
+        scramble += "2";
+        break;
     }
 
     if (i != 24)

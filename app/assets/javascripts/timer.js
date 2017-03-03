@@ -95,6 +95,9 @@ $(document).ready( function()
       running = false;
       inspectionRunning = false;
       finished = true;
+
+      window.localStorage.setItem($("#scramble").text(), $("#cube-time").text());
+
       $("#scramble").text(GetScramble());
     }
   });
